@@ -112,10 +112,10 @@ The simulation configurations and the training/testing map ids for obstacle avoi
 ## Citation
 If you use our HouseExpo dataset or pseudoSLAM simulator, you can cite us with
 ```
-@article{"",
-  title={},
-  author={},
-  journal={},
-  year={}
+@article{"li2019houseexpo",
+  title={HouseExpo: A Large-scale 2D Indoor Layout Dataset for Learning-based Algorithms on Mobile Robots},
+  author={Tingguang, Li and Danny, Ho and Chenming, Li and Delong, Zhu and Chaoqun, Wang and Max Q.-H. Meng},
+  journal={arXiv preprint arXiv:1903.09845},
+  year={2019}
 }
 ```
