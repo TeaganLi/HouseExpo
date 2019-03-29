@@ -7,11 +7,6 @@ HouseExpo is a large-scale dataset of indoor layout built on [SUNCG dataset](htt
 
 PseudoSLAM is a high-speed OpenAI Gym-compatible simulation platform that simulates SLAM and the navigation process in an unknown 2D environment. It reads data from HouseExpo, creates the corresponding 2D environment and generates a mobile robot to carry on different tasks in this environment. 
 
-<p align="center">
-  <a href="https://youtu.be/v7XPzj62OfE" target="Demo"><img src="https://img.youtube.com/vi/v7XPzj62OfE/0.jpg"
-  alt="HouseExpo Demo" width="640" height="480" border="10" /></a>
-</p>
-
 ## Getting Started
 - Clone the repo and cd into it:
   ```
