@@ -2,6 +2,16 @@
 ![samples](http://www.ee.cuhk.edu.hk/~tgli/TingguangLi_files/collection.png)
 by [Tingguang Li](http://www.ee.cuhk.edu.hk/~tgli/) at Robotics, Perception, and AI Laboratory, The Chinese University of Hong Kong. The paper and video can be found at [Paper](https://arxiv.org/abs/1903.09845), [Video](https://youtu.be/v7XPzj62OfE).
 
+If you think our work is useful, please consider citing use with
+```
+@article{"li2019houseexpo",
+  title={HouseExpo: A Large-scale 2D Indoor Layout Dataset for Learning-based Algorithms on Mobile Robots},
+  author={Tingguang, Li and Danny, Ho and Chenming, Li and Delong, Zhu and Chaoqun, Wang and Max Q.-H. Meng},
+  journal={arXiv preprint arXiv:1903.09845},
+  year={2019}
+}
+```
+
 ## Overview
 HouseExpo is a large-scale dataset of indoor layout built on [SUNCG dataset](http://suncg.cs.princeton.edu/#). The dataset contains 35,357 2D floor plans with 252,550 rooms in total, together with the category label of each room.
 
@@ -22,11 +32,18 @@ PseudoSLAM is a high-speed OpenAI Gym-compatible simulation platform that simula
   cd HouseExpo
   tar -xvzf json.tar.gz
   ```
-- Then you can try the simulator using keyboard by running 
+- There are two demos for you. You can try the exploration demo using keyboard by running 
   ```
-  python pseudoslam/envs/keyboard_controller.py
+  python pseudoslam/envs/keyboard_exploration.py
   ```
-  You can control the robot by pressing i (move forward), j (rotate clockwise) and l (rotate anti-clockwise).
+  You will see an exploration (partially known/unknown) environment (left figure). Activate the terminal and then you can control the robot by pressing w (move forward), a (rotate clockwise) and d (rotate anti-clockwise). 
+- You can try the navigation demo using keyboard by running
+  ```
+  python pseudoslam/envs/keyboard_navigation.py
+  ```
+  You will see a navigation (fully known) environment. Activate the terminal and you can save the traversed trajectory by pressing s.
+  ![demo](http://www.ee.cuhk.edu.hk/~tgli/TingguangLi_files/simulator_demo.png)
+
 
   
 ## Training Models
@@ -88,6 +105,7 @@ The parameters of the simulator are specified in `./pseudoslam/envs/config.yaml`
 * **json_dir**: path to json files
 * **map_id_set**: path to map_id_set. PseudoSLAM supports to utilize a subset of the dataset to train a model. map_id_set is a .txt file recording all map ids you want to train/test on.
 * **meter2pixel**: the ratio from meter to pixel, i.e. 1 meter in real world corresponds to n pixels in simulator. Note that a larger value will present a more precise simulation, but with a low simulation speed.
+* **mode**: 0 for exploration (unknown environment), 1 for navigation (fully known environment)
 * **obstacle**
   * **number**: number of obstacles. The obstacle is dynamically generated when initializing the map.
   * **size** [**max**, **min**]: size of obstacle (in meter).
@@ -110,13 +128,10 @@ The parameters of the simulator are specified in `./pseudoslam/envs/config.yaml`
 ## Benchmark Reproduction
 The simulation configurations and the training/testing map ids for obstacle avoidance and autonomous exploration are located at ./experiments for reproduction purpose.
 
-## Citation
-If you use our HouseExpo dataset or pseudoSLAM simulator, you can cite us with
-```
-@article{"li2019houseexpo",
-  title={HouseExpo: A Large-scale 2D Indoor Layout Dataset for Learning-based Algorithms on Mobile Robots},
-  author={Tingguang, Li and Danny, Ho and Chenming, Li and Delong, Zhu and Chaoqun, Wang and Max Q.-H. Meng},
-  journal={arXiv preprint arXiv:1903.09845},
-  year={2019}
-}
-```
+## Dynamic Obstacles
+We collected a database for dynamic obstacles (moving humans) from the real world and are incorporating this part into our simulator. A demo is like this. Please stay tuned for this part!
+
+![dynamic obstacles](http://www.ee.cuhk.edu.hk/~tgli/TingguangLi_files/dynamic_obstacles.gif)
+
+
+

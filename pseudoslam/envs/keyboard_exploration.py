@@ -9,39 +9,34 @@ import cv2
 
 import sys, select, termios, tty, os
 
-moveBindings = {'i':(1,0),
-                'j':(0,1),
-                'l':(0,-1),
-                'k':(-1,0)}
+moveBindings = {'w':(1,0),
+                'a':(0,1),
+                'd':(0,-1),
+                's':(-1,0)}
 
 def getKey():
     settings = termios.tcgetattr(sys.stdin)
     tty.setraw(sys.stdin.fileno())
     i,o,e=select.select([sys.stdin], [], [], 1)
-    # if i:
-    #     print('')
     key = sys.stdin.read(1)
-    # else:
-    #     return None
     termios.tcsetattr(sys.stdin, termios.TCSADRAIN, settings)
     return key
 
 def getMotion():
-
     key = getKey()
     if key in moveBindings.keys():
         robot_x = moveBindings[key][0]
         th = moveBindings[key][1]
         return robot_x,th
-    if (key == '\x03') or (key=='`'):
-            return None,None
+    if (key in ['q', 'r']):
+            return key, key
     else:
         return 0,0
 
 move= {1:'forward', 2:'left', 3:'right'}
 
 def main():
-    config_file= path.join(path.dirname(__file__), "config.yaml")
+    config_file= path.join(path.dirname(__file__), "config", "config_exploration.yaml")
     sim= pseudoSlam(config_file)
     
     print("Start simulation.\nThe configuration file locates at {}".format(config_file))
@@ -60,13 +55,14 @@ def main():
     print("-------------------------------------")
     print("Action command: ")
     print("-------------------------------------")
-    print("i: move forward.")
-    print("j: rotate clockwise.")
-    print("l: rotate anti-clockwise.")
-    print("Esc: stop simulation and quit.")
+    print("w: move forward.")
+    print("a: rotate clockwise.")
+    print("d: rotate anti-clockwise.")
+    print("r: reset the environment")
+    print("q: stop simulation and quit.")
     print("-------------------------------------")
 
-    i=0
+    epi_num = 0
     while 1:
         slamMap= sim.get_state()
         pose = sim.get_pose()
@@ -86,10 +82,14 @@ def main():
         elif w==-1:
             sim.moveRobot("right")
             motion= 3
-        else:
+        elif w=='q':
             print("Terminate the simulation and quit.")
             break
-        i=i+1
+        elif w=='r':
+            print("Reset the environment.")
+            sim.reset()
+        else:
+            continue
 
     return
 

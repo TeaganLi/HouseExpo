@@ -1,0 +1,39 @@
+# world setting
+json_dir: ../../HouseExpo/json/
+map_id_set: ../../HouseExpo/map_id_10.txt
+meter2pixel: 25 # X pixel =1 meter
+mode: 0  # 0 for exploration mode, 1 for navigation mode
+
+obstacle:
+  number: 0 # number of obstacle added to the world
+  size: # size of obstacle added in meter, radius/half length
+    min: 0.5 
+    max: 2
+
+# robot setting
+robotRadius: 0.2 # robot radius in meter
+stepLength:
+  linear: 0.3 # robot linear movement in each step in meter
+  angular: 10 # robot angular movement in each step in degree
+startPose: # robot starting pose [y;x;theta] in meter in world coord with center as origin | theta: angle to the x-axis
+  x: 0
+  y: 0
+  theta: 0
+resetRandomPose: 1 # flag of whether randomly set robot init pose ar each reset | if 0, robot reset to startPose at each reset
+
+# laser setting
+laser:
+  range: 5 # laser range in meter
+  fov: 180 # laser field of view in degree
+  resolution: 0.7 # laser rotation resolution in degree
+  noiseSigma: 0.1 # sigma of Gaussian distribution of laser noise
+
+# slam setting
+slamError:
+  linear: 0  # slam linear registration error in pixel
+  angular: 0 # slam rotational registration error in degree
+  
+# state setting
+stateSize: # state size in meter
+  x: 7 # state in pixel = x * meter2pixel
+  y: 7

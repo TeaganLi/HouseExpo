@@ -12,7 +12,7 @@ map_color= {'uncertain':-101, 'free':0, 'obstacle':100}
 move_choice= {'forward':np.array([1,0]), 'left': np.array([0,1]), 'right': np.array([0,-1])}
 
 class pseudoSlam():
-    def __init__(self, param_file):
+    def __init__(self, param_file, obstacle_config=None):
         """ pseudoSlam initilization """
         np.random.seed(0)
         """ define class variable """
@@ -33,6 +33,8 @@ class pseudoSlam():
         self.slamErr_angular= 0
         self.state_size= np.array([0,0])
         self.world= np.zeros([1,1])
+        self.obstacle_config = obstacle_config
+        self.traj = []
 
         with open(param_file) as stream:
             self.config = yaml.load(stream)
@@ -98,9 +100,12 @@ class pseudoSlam():
         """ state size """
         self.state_size= ( config["stateSize"]["x"] * self.m2p, config["stateSize"]["y"] * self.m2p ) # state size in the form of [x;y]
 
+        """ unknown mode """
+        self.is_exploration = (config["mode"] == 0)
         return
 
     def create_world(self, order=False, padding=5):
+        """ read maps in order if True, else randomly sample"""
         if order:
             map_id = self.map_id_set[0]
             self.map_id_set = np.delete(self.map_id_set, 0)
@@ -141,6 +146,19 @@ class pseudoSlam():
 
     def add_obstacle(self):
         """ Randomly add obstacle to world """
+        if self.obstacle_config:
+            """ add user defined obstacles """
+            f = open(self.obstacle_config, "r")
+            for config in f:
+                x, y, w, h = [int(n) for n in config.split(" ")]
+                rect = np.array([[x - w // 2, y - h // 2],
+                                 [x - w // 2, y + h // 2],
+                                 [x + w // 2, y + h // 2],
+                                 [x + w // 2, y - h // 2]],
+                                np.int32)
+                cv2.fillPoly(self.world, [rect], self.map_color["obstacle"])
+            return self.world
+
         if self.obs_num == 0:  # No obstacle added.
             return
 
@@ -215,6 +233,7 @@ class pseudoSlam():
         return self.robotPose
 
     def reset(self, order=False):
+        self.traj.clear()
         self.create_world(order)
 
         if (self.robotResetRandomPose==1) or (self.robotCrashed(self.robotPose_init)):
@@ -223,10 +242,13 @@ class pseudoSlam():
         else:
             self.robotPose = self.robotPose_init
 
-
         self.robotCrashed_flag= False
-        self.slamMap= np.ones(self.world.shape)*self.map_color["uncertain"]
-        self.dslamMap= np.ones(self.world.shape)*self.map_color["uncertain"]
+        if self.is_exploration:
+            self.slamMap= np.ones(self.world.shape)*self.map_color["uncertain"]
+            self.dslamMap= np.ones(self.world.shape)*self.map_color["uncertain"]
+        else:
+            self.slamMap = self.world.copy()
+            self.dslamMap = self.world.copy()
         self.build_map(self.robotPose)
         return
 
@@ -398,6 +420,9 @@ class pseudoSlam():
                 # print("Robot crash")
                 return False
 
+            if moveAction == "forward":
+                self.traj.append([int(x), int(y)])  # only save distince pts
+
             # build map on the targetPose
             self.build_map( targetPose )
             i=i+1
@@ -420,6 +445,10 @@ class pseudoSlam():
         head_x = self.robotPose[1] + np.cos(self.robotPose[2]) * headLen
         cv2.circle(state, (int(head_x), int(head_y)), headRadius, 50, thickness=-1)
 
+        if not self.is_exploration:
+            """Change color for known environment navigation"""
+            state[state == self.map_color['free']] = 255
+            state[state == self.map_color['obstacle']] = 0
         return state
 
     def robotCrashed(self, pose):

@@ -19,7 +19,7 @@ class jsonReader():
         self.json_prefix = os.path.join(os.path.dirname(__file__), "../", json_prefix)      # json data dir
         self.meter2pixel = meter2pixel      # meter to pixel. E.g. meter2pixel=100 represents 1 meter
                                             # equals 100 pixels in the map
-        self.border_pad = 25                # border padding for each side
+        self.border_pad = 1                 # border padding for each side
 
         self.json_data = {}                 # house info read from json file
         self.cnt_map = []                   # contour map, 0-obstacle, 255-free space
