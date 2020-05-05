@@ -65,6 +65,7 @@ def main():
     print("-------------------------------------")
 
     epi_num = 0
+    fig_map = plt.gcf()     
     while 1:
         slamMap= sim.get_state()
         pose = sim.get_pose()
@@ -73,6 +74,7 @@ def main():
         plt.imshow(slamMap,cmap="gray")
         plt.draw()
         plt.pause(0.001)
+        # fig_map.savefig("test.png")   # uncomment this if you want save figure
 
         v,w= getMotion()
         if v==1:
