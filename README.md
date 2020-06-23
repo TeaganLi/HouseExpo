@@ -97,7 +97,7 @@ There are 35,357 2D floor plans with 252,550 rooms, with mean of 7.14 and median
 ![Room number distribution](http://www.ee.cuhk.edu.hk/~tgli/TingguangLi_files/room_label_dist.png)
 
 Feel free to download all floor plans as .png images at:
-https://drive.google.com/file/d/12CU51Fhi-_WubsPUsq5KCijfucW5HG7G/view?usp=sharing
+https://drive.google.com/file/d/1gEmTdgZD1pIa8UtaLXz8vm_301zL4L1J/view?usp=sharing
 
 ## Usage of PseudoSLAM
 ### Simulator Parameters
