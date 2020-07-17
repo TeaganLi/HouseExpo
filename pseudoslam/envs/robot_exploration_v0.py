@@ -14,7 +14,7 @@ class RobotExplorationT0(gym.Env):
         if config_path.startswith("/"):
             fullpath = config_path
         else:
-            fullpath = path.join(path.dirname(__file__), config_path)
+            fullpath = path.join(path.dirname(__file__), "config", config_path)
         if not path.exists(fullpath):
             raise IOError("File %s does not exist" % fullpath)
 
@@ -30,12 +30,17 @@ class RobotExplorationT0(gym.Env):
 
     def render(self, mode='human'):
         slamMap = self._get_obs()[:,:,0]
-
-        plt.figure(0)
-        plt.clf()
-        plt.imshow(slamMap, cmap='gray')
-        plt.draw()
-        plt.pause(0.00001)
+        if mode == "human":
+            plt.figure(0)
+            plt.clf()
+            plt.imshow(slamMap, cmap='gray')
+            plt.draw()
+            plt.pause(0.00001)
+        elif mode == "rgb_array":
+            obs = np.expand_dims(slamMap, -1).repeat(3, -1)
+            obs += 101  # convert to [0,255]
+            obs = obs.astype(np.uint8)
+            return obs
 
     def reset(self, order=False):
         self.sim.reset(order)
@@ -146,7 +151,7 @@ if __name__ == '__main__':
         obs, reward, done, info = env.step(act)
         cmd = ['forward', 'left', 'right']
 
-        if epi_cnt > 100:
+        if epi_cnt > 100 or done:
             epi_cnt = 0
             env.reset()
 

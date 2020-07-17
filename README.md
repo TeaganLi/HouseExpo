@@ -44,7 +44,10 @@ PseudoSLAM is a high-speed OpenAI Gym-compatible simulation platform that simula
   You will see a navigation (fully known) environment. Activate the terminal and you can save the traversed trajectory by pressing s.
   ![demo](http://www.ee.cuhk.edu.hk/~tgli/TingguangLi_files/simulator_demo.png)
 
-
+- Check and adjust your configuration file by running, and you will see a global map and a local observation
+  ```
+  python pseudoslam/envs/robot_exploration_v0.py
+  ```
   
 ## Training Models
 - One Gym-compatible environment of robot exploration has been implemented. To train a model using OpenAI baselines, first add our environment in Gym by registering in `/gym/envs/__init__.py`:
@@ -52,18 +55,18 @@ PseudoSLAM is a high-speed OpenAI Gym-compatible simulation platform that simula
   register(
       id='RobotExploration-v0',
       entry_point='pseudoslam.envs.robot_exploration_v0:RobotExplorationT0',
-      max_episode_steps=100,
+      max_episode_steps=200,
   )
   ```
 - Start to train the model using baselines, for example, run
   ```
-  python -m baselines.run --alg=ppo2 --env=RobotExploration-v0 --network=cnn --num_timesteps=2e7
+  python -m baselines.run --alg=ppo2 --env=RobotExploration-v0 --network=cnn --num_timesteps=2e7 --save_path=~/models/exploration_20M_ppo2 --save_interval=10000 --log_path=~/logs/exploration --save_video_interval=10000
   ```
 - Check your trained model by running
   ```
-  python -m baselines.run --alg=ppo2 --env=RobotExploration-v0 --num_timesteps=0 --play
+  python -m baselines.run --alg=ppo2 --env=RobotExploration-v0 --num_timesteps=0 --load_path=~/models/exploration_20M_ppo2 --play
   ```
-Please refer to https://github.com/openai/baselines for more detailed introduction on how to use baselines.
+Please refer to https://github.com/openai/baselines for more detailed introduction on how to use baselines, like launching multiple environments.
 
 ## Details of HouseExpo Dataset
 ### Data Format
