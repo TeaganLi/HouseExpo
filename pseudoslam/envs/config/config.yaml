@@ -23,7 +23,7 @@ resetRandomPose: 0 # flag of whether randomly set robot init pose ar each reset 
 
 # laser setting
 laser:
-  range: 10 # laser range in meter
+  range: 8 # laser range in meter
   fov: 180 # laser field of view in degree
   resolution: 1 # laser rotation resolution in degree
   noiseSigma: 0. # sigma of Gaussian distribution of laser noise
