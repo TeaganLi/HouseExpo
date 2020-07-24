@@ -1,6 +1,6 @@
 # world setting
 json_dir: ../../HouseExpo/json/
-map_id_set: ../../HouseExpo/map_id_test.txt
+map_id_set: ../../HouseExpo/map_id_train.txt
 meter2pixel: 4 # X pixel =1 meter
 mode: 0  # 0 for exploration mode, 1 for navigation mode
 
@@ -23,7 +23,7 @@ resetRandomPose: 0 # flag of whether randomly set robot init pose ar each reset 
 
 # laser setting
 laser:
-  range: 8 # laser range in meter
+  range: 10 # laser range in meter
   fov: 180 # laser field of view in degree
   resolution: 1 # laser rotation resolution in degree
   noiseSigma: 0. # sigma of Gaussian distribution of laser noise
