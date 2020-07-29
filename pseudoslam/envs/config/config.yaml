@@ -1,7 +1,7 @@
 # world setting
 json_dir: ../../HouseExpo/json/
 map_id_set: ../../HouseExpo/map_id_train.txt
-meter2pixel: 4 # X pixel =1 meter
+meter2pixel: 16 # X pixel =1 meter
 mode: 0  # 0 for exploration mode, 1 for navigation mode
 
 obstacle:
@@ -23,7 +23,7 @@ resetRandomPose: 0 # flag of whether randomly set robot init pose ar each reset 
 
 # laser setting
 laser:
-  range: 10 # laser range in meter
+  range: 2 # laser range in meter
   fov: 180 # laser field of view in degree
   resolution: 1 # laser rotation resolution in degree
   noiseSigma: 0. # sigma of Gaussian distribution of laser noise
@@ -35,5 +35,5 @@ slamError:
   
 # state setting
 stateSize: # state size in meter
-  x: 16 # state in pixel = x * meter2pixel
-  y: 16
+  x: 4 # state in pixel = x * meter2pixel
+  y: 4

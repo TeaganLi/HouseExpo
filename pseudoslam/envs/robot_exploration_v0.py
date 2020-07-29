@@ -138,22 +138,24 @@ if __name__ == '__main__':
 
     epi_cnt = 0
     while 1:
-        # pose = env.sim.get_pose()
+        pose = env.sim.get_pose()
         plt.figure(1)
         plt.clf()
         plt.imshow(env.sim.get_state().copy(), cmap='gray')
         plt.draw()
         plt.pause(0.00001)
         env.render()
-
+        
         epi_cnt += 1
         act = np.random.randint(3)
         obs, reward, done, info = env.step(act)
         cmd = ['forward', 'left', 'right']
-
+       
         if epi_cnt > 100 or done:
             epi_cnt = 0
             env.reset()
+
+
 
 
 

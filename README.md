@@ -1,4 +1,4 @@
-# HouseExpo Dataset & PseudoSLAM Simulator
+# HouseExpo Dataset & PseudoSLAM Simulator (IROS2020)
 ![samples](http://www.ee.cuhk.edu.hk/~tgli/TingguangLi_files/collection.png)
 by [Tingguang Li](http://www.ee.cuhk.edu.hk/~tgli/) at Robotics, Perception, and AI Laboratory, The Chinese University of Hong Kong. The paper and video can be found at [Paper](https://arxiv.org/abs/1903.09845), [Video](https://youtu.be/v7XPzj62OfE).
 
@@ -13,9 +13,16 @@ If you think our work is useful, please consider citing use with
 ```
 
 ## Overview
-HouseExpo is a large-scale dataset of indoor layout built on [SUNCG dataset](http://suncg.cs.princeton.edu/#). The dataset contains 35,357 2D floor plans with 252,550 rooms in total, together with the category label of each room.
+HouseExpo is a large-scale dataset of indoor layout built on [SUNCG dataset](http://suncg.cs.princeton.edu/#). The dataset contains 35,126 2D floor plans with 252,550 rooms in total, together with the category label of each room. Check out all floor plans as .png images at:
+https://drive.google.com/file/d/1gEmTdgZD1pIa8UtaLXz8vm_301zL4L1J/view?usp=sharing.
 
 PseudoSLAM is a high-speed OpenAI Gym-compatible simulation platform that simulates SLAM and the navigation process in an unknown 2D environment. It reads data from HouseExpo, creates the corresponding 2D environment and generates a mobile robot to carry on different tasks in this environment. 
+
+## Prerequisite
+The code has been tested under 
+* python 3.6
+* tensorflow 1.15
+* Ubuntu 16.04
 
 ## Getting Started
 - Clone the repo and cd into it:
@@ -44,13 +51,13 @@ PseudoSLAM is a high-speed OpenAI Gym-compatible simulation platform that simula
   You will see a navigation (fully known) environment. Activate the terminal and you can save the traversed trajectory by pressing s.
   ![demo](http://www.ee.cuhk.edu.hk/~tgli/TingguangLi_files/simulator_demo.png)
 
-- Check and adjust your configuration file by running, and you will see a global map and a local observation
+- To train your model, you can check the observation and adjust your configuration file by running the following code. You will see a global map and a local observation.
   ```
   python pseudoslam/envs/robot_exploration_v0.py
   ```
   
 ## Training Models
-- One Gym-compatible environment of robot exploration has been implemented. To train a model using OpenAI baselines, first add our environment in Gym by registering in `/gym/envs/__init__.py`:
+- One Gym-compatible environment of robot exploration has been implemented. To train a model using OpenAI baselines, first install OpenAI Gym and Baselines. Then add our environment in Gym by registering in `/gym/envs/__init__.py`:
   ```
   register(
       id='RobotExploration-v0',
@@ -60,9 +67,9 @@ PseudoSLAM is a high-speed OpenAI Gym-compatible simulation platform that simula
   ```
 - Start to train the model using baselines, for example, run
   ```
-  python -m baselines.run --alg=ppo2 --env=RobotExploration-v0 --network=cnn --num_timesteps=2e7 --save_path=~/models/exploration_20M_ppo2 --save_interval=10000 --log_path=~/logs/exploration --save_video_interval=10000
+  python -m baselines.run --alg=ppo2 --env=RobotExploration-v0 --network=cnn --num_timesteps=2e7 --save_path=~/models/exploration_20M_ppo2 --save_interval=10 --log_path=~/logs/exploration --save_video_interval=10000
   ```
-- Check your trained model by running
+- After the training is finished, check your trained model by running
   ```
   python -m baselines.run --alg=ppo2 --env=RobotExploration-v0 --num_timesteps=0 --load_path=~/models/exploration_20M_ppo2 --play
   ```
@@ -96,7 +103,7 @@ HouseExpo inherits room category labels from SUNCG dataset and  also provides a 
 ![room_label](http://www.ee.cuhk.edu.hk/~tgli/TingguangLi_files/room_label.png) 
 
 ### Statistics
-There are 35,357 2D floor plans with 252,550 rooms, with mean of 7.14 and median of 7.0 rooms per house. The distribution of rooms is
+There are 35,126 2D floor plans with 252,550 rooms, with mean of 7.14 and median of 7.0 rooms per house. The distribution of rooms is
 ![Room number distribution](http://www.ee.cuhk.edu.hk/~tgli/TingguangLi_files/room_label_dist.png)
 
 Feel free to download all floor plans as .png images at:

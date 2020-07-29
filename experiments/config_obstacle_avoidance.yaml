@@ -2,6 +2,7 @@
 json_dir: ../../HouseExpo/
 map_id_set: ../../HouseExpo/empty.txt
 meter2pixel: 33 # X pixel =1 meter
+mode: 1  # 0 for exploration mode, 1 for navigation mode
 
 obstacle:
   number: 5 # number of obstacle added to the world

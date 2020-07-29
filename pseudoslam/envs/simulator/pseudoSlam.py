@@ -104,7 +104,7 @@ class pseudoSlam():
         self.is_exploration = (config["mode"] == 0)
         return
 
-    def create_world(self, order=False, padding=5):
+    def create_world(self, order=False, padding=10):
         """ read maps in order if True, else randomly sample"""
         if order:
             map_id = self.map_id_set[0]
