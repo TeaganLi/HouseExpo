@@ -71,7 +71,7 @@ The code has been tested under
   ```
 - After the training is finished, check your trained model by running
   ```
-  python -m baselines.run --alg=ppo2 --env=RobotExploration-v0 --num_timesteps=0 --load_path=~/models/exploration_20M_ppo2 --play
+  python -m baselines.run --alg=ppo2 --env=RobotExploration-v0 --network=cnn --num_timesteps=0 --load_path=~/models/exploration_20M_ppo2 --play
   ```
 Please refer to https://github.com/openai/baselines for more detailed introduction on how to use baselines, like launching multiple environments.
 
