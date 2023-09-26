@@ -1,6 +1,6 @@
 # HouseExpo Dataset & PseudoSLAM Simulator (IROS2020)
-![samples](http://www.ee.cuhk.edu.hk/~tgli/TingguangLi_files/collection.png)
-by [Tingguang Li](http://www.ee.cuhk.edu.hk/~tgli/) at Robotics, Perception, and AI Laboratory, The Chinese University of Hong Kong. The paper and video can be found at [Paper](https://arxiv.org/abs/1903.09845), [Video](https://youtu.be/v7XPzj62OfE).
+![samples](https://github.com/TeaganLi/teaganli.github.io/blob/master/HouseExpo/collection.png)
+by [Tingguang Li](https://teaganli.github.io) at The Chinese University of Hong Kong. The paper and video can be found at [Paper](https://arxiv.org/abs/1903.09845), [Video](https://youtu.be/v7XPzj62OfE).
 
 If you think our work is useful, please consider citing use with
 ```
